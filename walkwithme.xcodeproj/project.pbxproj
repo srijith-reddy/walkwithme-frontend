@@ -1,0 +1,546 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		8A59AF3C2EDE87F900C73794 /* YOLODetection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A59AF3B2EDE87F900C73794 /* YOLODetection.swift */; };
+		8A59AF3E2EDE8BE700C73794 /* DebugSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A59AF3D2EDE8BD300C73794 /* DebugSettings.swift */; };
+		8A59AF422EDE92B200C73794 /* FusionDebugOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A59AF412EDE92A600C73794 /* FusionDebugOverlay.swift */; };
+		8A8C561A2EDB38A400B1C31B /* YOLODebugOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A8C56192EDB38A400B1C31B /* YOLODebugOverlay.swift */; };
+		8A8C561C2EDB4B9F00B1C31B /* yolo11n.mlpackage in Sources */ = {isa = PBXBuildFile; fileRef = 8A8C561B2EDB4B9F00B1C31B /* yolo11n.mlpackage */; };
+		8A8C561F2EDC15EF00B1C31B /* StepCountManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A8C561E2EDC15EF00B1C31B /* StepCountManager.swift */; };
+		8A8F9E552ED9B5520049AED5 /* WalkWithMeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A8F9E542ED9B5520049AED5 /* WalkWithMeApp.swift */; };
+		8A8F9E562ED9B5520049AED5 /* HazardVelocity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A8F9E3E2ED9B5520049AED5 /* HazardVelocity.swift */; };
+		8A8F9E572ED9B5520049AED5 /* Bearing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A8F9E4B2ED9B5520049AED5 /* Bearing.swift */; };
+		8A8F9E582ED9B5520049AED5 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A8F9E4A2ED9B5520049AED5 /* API.swift */; };
+		8A8F9E592ED9B5520049AED5 /* HazardOverlayManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A8F9E3D2ED9B5520049AED5 /* HazardOverlayManager.swift */; };
+		8A8F9E5A2ED9B5520049AED5 /* Step.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A8F9E482ED9B5520049AED5 /* Step.swift */; };
+		8A8F9E5B2ED9B5520049AED5 /* ARHUDManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A8F9E422ED9B5520049AED5 /* ARHUDManager.swift */; };
+		8A8F9E5C2ED9B5520049AED5 /* ARCameraFrameStreamer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A8F9E362ED9B5520049AED5 /* ARCameraFrameStreamer.swift */; };
+		8A8F9E5D2ED9B5520049AED5 /* HazardFiltering.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A8F9E3B2ED9B5520049AED5 /* HazardFiltering.swift */; };
+		8A8F9E5E2ED9B5520049AED5 /* ARScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A8F9E4F2ED9B5520049AED5 /* ARScreen.swift */; };
+		8A8F9E5F2ED9B5520049AED5 /* HazardFusion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A8F9E3C2ED9B5520049AED5 /* HazardFusion.swift */; };
+		8A8F9E602ED9B5520049AED5 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A8F9E512ED9B5520049AED5 /* ContentView.swift */; };
+		8A8F9E612ED9B5520049AED5 /* DepthEstimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A8F9E3A2ED9B5520049AED5 /* DepthEstimator.swift */; };
+		8A8F9E622ED9B5520049AED5 /* NavigationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A8F9E4D2ED9B5520049AED5 /* NavigationManager.swift */; };
+		8A8F9E632ED9B5520049AED5 /* ARSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A8F9E382ED9B5520049AED5 /* ARSessionManager.swift */; };
+		8A8F9E642ED9B5520049AED5 /* RouteResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A8F9E472ED9B5520049AED5 /* RouteResponse.swift */; };
+		8A8F9E662ED9B5520049AED5 /* YOLODetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A8F9E402ED9B5520049AED5 /* YOLODetector.swift */; };
+		8A8F9E672ED9B5520049AED5 /* ARHazardEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A8F9E372ED9B5520049AED5 /* ARHazardEntity.swift */; };
+		8A8F9E682ED9B5520049AED5 /* RouteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A8F9E522ED9B5520049AED5 /* RouteView.swift */; };
+		8A8F9E692ED9B5520049AED5 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A8F9E4C2ED9B5520049AED5 /* LocationManager.swift */; };
+		8A8F9E6A2ED9B5520049AED5 /* ARArrowEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A8F9E352ED9B5520049AED5 /* ARArrowEntity.swift */; };
+		8A8F9E6B2ED9B5520049AED5 /* ARAlignment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A8F9E342ED9B5520049AED5 /* ARAlignment.swift */; };
+		8A8F9E6C2ED9B5520049AED5 /* MiniMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A8F9E432ED9B5520049AED5 /* MiniMapView.swift */; };
+		8A8F9E6D2ED9B5520049AED5 /* VisionUploader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A8F9E3F2ED9B5520049AED5 /* VisionUploader.swift */; };
+		8A8F9E6E2ED9B5520049AED5 /* TurnHUDManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A8F9E442ED9B5520049AED5 /* TurnHUDManager.swift */; };
+		8A8F9E6F2ED9B5520049AED5 /* TurnPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A8F9E452ED9B5520049AED5 /* TurnPanel.swift */; };
+		8A8F9E702ED9B5520049AED5 /* ARViewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A8F9E502ED9B5520049AED5 /* ARViewContainer.swift */; };
+		8A8F9E772ED9B6750049AED5 /* BackendConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A8F9E762ED9B6750049AED5 /* BackendConfig.swift */; };
+		8A8F9E792ED9D4C30049AED5 /* GeoUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A8F9E782ED9D4C30049AED5 /* GeoUtils.swift */; };
+		8A8F9E7B2ED9D4FC0049AED5 /* Route+NextInstruction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A8F9E7A2ED9D4FC0049AED5 /* Route+NextInstruction.swift */; };
+		8A8F9E812ED9E7FD0049AED5 /* walkwithme.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A8F9E802ED9E7FD0049AED5 /* walkwithme.png */; };
+		8A8F9E832ED9E9DA0049AED5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8A8F9E822ED9E9DA0049AED5 /* Assets.xcassets */; };
+		8A8F9E872EDB27760049AED5 /* SimpleNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A8F9E862EDB27760049AED5 /* SimpleNavigationView.swift */; };
+		8A8F9E892EDB27870049AED5 /* Route+MapKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A8F9E882EDB27870049AED5 /* Route+MapKit.swift */; };
+		8ABDA1432EE16FCE00B9E6E8 /* ARRouteChevronEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ABDA1422EE16FCE00B9E6E8 /* ARRouteChevronEntity.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		8A59AF3B2EDE87F900C73794 /* YOLODetection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YOLODetection.swift; sourceTree = "<group>"; };
+		8A59AF3D2EDE8BD300C73794 /* DebugSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugSettings.swift; sourceTree = "<group>"; };
+		8A59AF412EDE92A600C73794 /* FusionDebugOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FusionDebugOverlay.swift; sourceTree = "<group>"; };
+		8A8C56192EDB38A400B1C31B /* YOLODebugOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YOLODebugOverlay.swift; sourceTree = "<group>"; };
+		8A8C561B2EDB4B9F00B1C31B /* yolo11n.mlpackage */ = {isa = PBXFileReference; lastKnownFileType = folder.mlpackage; path = yolo11n.mlpackage; sourceTree = "<group>"; };
+		8A8C561D2EDC13EC00B1C31B /* walkwithme.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = walkwithme.entitlements; sourceTree = "<group>"; };
+		8A8C561E2EDC15EF00B1C31B /* StepCountManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepCountManager.swift; sourceTree = "<group>"; };
+		8A8F9E042ED9B2950049AED5 /* walkwithme.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = walkwithme.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8A8F9E342ED9B5520049AED5 /* ARAlignment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARAlignment.swift; sourceTree = "<group>"; };
+		8A8F9E352ED9B5520049AED5 /* ARArrowEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARArrowEntity.swift; sourceTree = "<group>"; };
+		8A8F9E362ED9B5520049AED5 /* ARCameraFrameStreamer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARCameraFrameStreamer.swift; sourceTree = "<group>"; };
+		8A8F9E372ED9B5520049AED5 /* ARHazardEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARHazardEntity.swift; sourceTree = "<group>"; };
+		8A8F9E382ED9B5520049AED5 /* ARSessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARSessionManager.swift; sourceTree = "<group>"; };
+		8A8F9E3A2ED9B5520049AED5 /* DepthEstimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepthEstimator.swift; sourceTree = "<group>"; };
+		8A8F9E3B2ED9B5520049AED5 /* HazardFiltering.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HazardFiltering.swift; sourceTree = "<group>"; };
+		8A8F9E3C2ED9B5520049AED5 /* HazardFusion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HazardFusion.swift; sourceTree = "<group>"; };
+		8A8F9E3D2ED9B5520049AED5 /* HazardOverlayManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HazardOverlayManager.swift; sourceTree = "<group>"; };
+		8A8F9E3E2ED9B5520049AED5 /* HazardVelocity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HazardVelocity.swift; sourceTree = "<group>"; };
+		8A8F9E3F2ED9B5520049AED5 /* VisionUploader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisionUploader.swift; sourceTree = "<group>"; };
+		8A8F9E402ED9B5520049AED5 /* YOLODetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YOLODetector.swift; sourceTree = "<group>"; };
+		8A8F9E422ED9B5520049AED5 /* ARHUDManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARHUDManager.swift; sourceTree = "<group>"; };
+		8A8F9E432ED9B5520049AED5 /* MiniMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniMapView.swift; sourceTree = "<group>"; };
+		8A8F9E442ED9B5520049AED5 /* TurnHUDManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TurnHUDManager.swift; sourceTree = "<group>"; };
+		8A8F9E452ED9B5520049AED5 /* TurnPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TurnPanel.swift; sourceTree = "<group>"; };
+		8A8F9E472ED9B5520049AED5 /* RouteResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteResponse.swift; sourceTree = "<group>"; };
+		8A8F9E482ED9B5520049AED5 /* Step.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Step.swift; sourceTree = "<group>"; };
+		8A8F9E4A2ED9B5520049AED5 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
+		8A8F9E4B2ED9B5520049AED5 /* Bearing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bearing.swift; sourceTree = "<group>"; };
+		8A8F9E4C2ED9B5520049AED5 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
+		8A8F9E4D2ED9B5520049AED5 /* NavigationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationManager.swift; sourceTree = "<group>"; };
+		8A8F9E4F2ED9B5520049AED5 /* ARScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARScreen.swift; sourceTree = "<group>"; };
+		8A8F9E502ED9B5520049AED5 /* ARViewContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARViewContainer.swift; sourceTree = "<group>"; };
+		8A8F9E512ED9B5520049AED5 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		8A8F9E522ED9B5520049AED5 /* RouteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteView.swift; sourceTree = "<group>"; };
+		8A8F9E542ED9B5520049AED5 /* WalkWithMeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalkWithMeApp.swift; sourceTree = "<group>"; };
+		8A8F9E762ED9B6750049AED5 /* BackendConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackendConfig.swift; sourceTree = "<group>"; };
+		8A8F9E782ED9D4C30049AED5 /* GeoUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoUtils.swift; sourceTree = "<group>"; };
+		8A8F9E7A2ED9D4FC0049AED5 /* Route+NextInstruction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Route+NextInstruction.swift"; sourceTree = "<group>"; };
+		8A8F9E802ED9E7FD0049AED5 /* walkwithme.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = walkwithme.png; sourceTree = "<group>"; };
+		8A8F9E822ED9E9DA0049AED5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		8A8F9E862EDB27760049AED5 /* SimpleNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleNavigationView.swift; sourceTree = "<group>"; };
+		8A8F9E882EDB27870049AED5 /* Route+MapKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Route+MapKit.swift"; sourceTree = "<group>"; };
+		8ABDA1422EE16FCE00B9E6E8 /* ARRouteChevronEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARRouteChevronEntity.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8A8F9E012ED9B2950049AED5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		8A8F9DFB2ED9B2950049AED5 = {
+			isa = PBXGroup;
+			children = (
+				8A8C561D2EDC13EC00B1C31B /* walkwithme.entitlements */,
+				8A8F9E822ED9E9DA0049AED5 /* Assets.xcassets */,
+				8A8F9E762ED9B6750049AED5 /* BackendConfig.swift */,
+				8A8F9E412ED9B5520049AED5 /* AR */,
+				8A8F9E462ED9B5520049AED5 /* HUD */,
+				8A8F9E492ED9B5520049AED5 /* Models */,
+				8A8F9E4E2ED9B5520049AED5 /* Utils */,
+				8A8F9E532ED9B5520049AED5 /* Views */,
+				8A8F9E542ED9B5520049AED5 /* WalkWithMeApp.swift */,
+				8A8F9E802ED9E7FD0049AED5 /* walkwithme.png */,
+				8A8C561B2EDB4B9F00B1C31B /* yolo11n.mlpackage */,
+				8A8C561E2EDC15EF00B1C31B /* StepCountManager.swift */,
+				8A8F9E052ED9B2950049AED5 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		8A8F9E052ED9B2950049AED5 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8A8F9E042ED9B2950049AED5 /* walkwithme.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		8A8F9E412ED9B5520049AED5 /* AR */ = {
+			isa = PBXGroup;
+			children = (
+				8A8F9E342ED9B5520049AED5 /* ARAlignment.swift */,
+				8A8F9E352ED9B5520049AED5 /* ARArrowEntity.swift */,
+				8A8F9E362ED9B5520049AED5 /* ARCameraFrameStreamer.swift */,
+				8A8F9E372ED9B5520049AED5 /* ARHazardEntity.swift */,
+				8A8F9E382ED9B5520049AED5 /* ARSessionManager.swift */,
+				8A8F9E3A2ED9B5520049AED5 /* DepthEstimator.swift */,
+				8A8F9E3B2ED9B5520049AED5 /* HazardFiltering.swift */,
+				8A8F9E3C2ED9B5520049AED5 /* HazardFusion.swift */,
+				8A8F9E3D2ED9B5520049AED5 /* HazardOverlayManager.swift */,
+				8A8F9E3E2ED9B5520049AED5 /* HazardVelocity.swift */,
+				8A8F9E3F2ED9B5520049AED5 /* VisionUploader.swift */,
+				8A8F9E402ED9B5520049AED5 /* YOLODetector.swift */,
+				8A8F9E7A2ED9D4FC0049AED5 /* Route+NextInstruction.swift */,
+				8A59AF3B2EDE87F900C73794 /* YOLODetection.swift */,
+				8ABDA1422EE16FCE00B9E6E8 /* ARRouteChevronEntity.swift */,
+			);
+			path = AR;
+			sourceTree = "<group>";
+		};
+		8A8F9E462ED9B5520049AED5 /* HUD */ = {
+			isa = PBXGroup;
+			children = (
+				8A8F9E422ED9B5520049AED5 /* ARHUDManager.swift */,
+				8A59AF412EDE92A600C73794 /* FusionDebugOverlay.swift */,
+				8A8F9E432ED9B5520049AED5 /* MiniMapView.swift */,
+				8A8F9E442ED9B5520049AED5 /* TurnHUDManager.swift */,
+				8A8F9E452ED9B5520049AED5 /* TurnPanel.swift */,
+				8A8C56192EDB38A400B1C31B /* YOLODebugOverlay.swift */,
+				8A59AF3D2EDE8BD300C73794 /* DebugSettings.swift */,
+			);
+			path = HUD;
+			sourceTree = "<group>";
+		};
+		8A8F9E492ED9B5520049AED5 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				8A8F9E472ED9B5520049AED5 /* RouteResponse.swift */,
+				8A8F9E482ED9B5520049AED5 /* Step.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		8A8F9E4E2ED9B5520049AED5 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				8A8F9E4A2ED9B5520049AED5 /* API.swift */,
+				8A8F9E4B2ED9B5520049AED5 /* Bearing.swift */,
+				8A8F9E4C2ED9B5520049AED5 /* LocationManager.swift */,
+				8A8F9E4D2ED9B5520049AED5 /* NavigationManager.swift */,
+				8A8F9E782ED9D4C30049AED5 /* GeoUtils.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		8A8F9E532ED9B5520049AED5 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				8A8F9E4F2ED9B5520049AED5 /* ARScreen.swift */,
+				8A8F9E502ED9B5520049AED5 /* ARViewContainer.swift */,
+				8A8F9E512ED9B5520049AED5 /* ContentView.swift */,
+				8A8F9E522ED9B5520049AED5 /* RouteView.swift */,
+				8A8F9E862EDB27760049AED5 /* SimpleNavigationView.swift */,
+				8A8F9E882EDB27870049AED5 /* Route+MapKit.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		8A8F9E032ED9B2950049AED5 /* walkwithme */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8A8F9E0F2ED9B2960049AED5 /* Build configuration list for PBXNativeTarget "walkwithme" */;
+			buildPhases = (
+				8A8F9E002ED9B2950049AED5 /* Sources */,
+				8A8F9E012ED9B2950049AED5 /* Frameworks */,
+				8A8F9E022ED9B2950049AED5 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = walkwithme;
+			packageProductDependencies = (
+			);
+			productName = walkwithme;
+			productReference = 8A8F9E042ED9B2950049AED5 /* walkwithme.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		8A8F9DFC2ED9B2950049AED5 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 2610;
+				LastUpgradeCheck = 2610;
+				TargetAttributes = {
+					8A8F9E032ED9B2950049AED5 = {
+						CreatedOnToolsVersion = 26.1.1;
+					};
+				};
+			};
+			buildConfigurationList = 8A8F9DFF2ED9B2950049AED5 /* Build configuration list for PBXProject "walkwithme" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 8A8F9DFB2ED9B2950049AED5;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 8A8F9E052ED9B2950049AED5 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8A8F9E032ED9B2950049AED5 /* walkwithme */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		8A8F9E022ED9B2950049AED5 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8A8F9E832ED9E9DA0049AED5 /* Assets.xcassets in Resources */,
+				8A8F9E812ED9E7FD0049AED5 /* walkwithme.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8A8F9E002ED9B2950049AED5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8A8F9E552ED9B5520049AED5 /* WalkWithMeApp.swift in Sources */,
+				8A8F9E562ED9B5520049AED5 /* HazardVelocity.swift in Sources */,
+				8A8F9E572ED9B5520049AED5 /* Bearing.swift in Sources */,
+				8A8C561C2EDB4B9F00B1C31B /* yolo11n.mlpackage in Sources */,
+				8A8F9E582ED9B5520049AED5 /* API.swift in Sources */,
+				8A8F9E592ED9B5520049AED5 /* HazardOverlayManager.swift in Sources */,
+				8A8F9E5A2ED9B5520049AED5 /* Step.swift in Sources */,
+				8A8F9E5B2ED9B5520049AED5 /* ARHUDManager.swift in Sources */,
+				8A59AF422EDE92B200C73794 /* FusionDebugOverlay.swift in Sources */,
+				8A8F9E5C2ED9B5520049AED5 /* ARCameraFrameStreamer.swift in Sources */,
+				8A8F9E5D2ED9B5520049AED5 /* HazardFiltering.swift in Sources */,
+				8A8F9E5E2ED9B5520049AED5 /* ARScreen.swift in Sources */,
+				8A8F9E5F2ED9B5520049AED5 /* HazardFusion.swift in Sources */,
+				8A8F9E602ED9B5520049AED5 /* ContentView.swift in Sources */,
+				8A8F9E612ED9B5520049AED5 /* DepthEstimator.swift in Sources */,
+				8A8F9E622ED9B5520049AED5 /* NavigationManager.swift in Sources */,
+				8A8F9E632ED9B5520049AED5 /* ARSessionManager.swift in Sources */,
+				8A8F9E642ED9B5520049AED5 /* RouteResponse.swift in Sources */,
+				8A8F9E662ED9B5520049AED5 /* YOLODetector.swift in Sources */,
+				8A8F9E672ED9B5520049AED5 /* ARHazardEntity.swift in Sources */,
+				8A8F9E682ED9B5520049AED5 /* RouteView.swift in Sources */,
+				8A8F9E772ED9B6750049AED5 /* BackendConfig.swift in Sources */,
+				8A8F9E7B2ED9D4FC0049AED5 /* Route+NextInstruction.swift in Sources */,
+				8A8F9E692ED9B5520049AED5 /* LocationManager.swift in Sources */,
+				8ABDA1432EE16FCE00B9E6E8 /* ARRouteChevronEntity.swift in Sources */,
+				8A8F9E872EDB27760049AED5 /* SimpleNavigationView.swift in Sources */,
+				8A8C561A2EDB38A400B1C31B /* YOLODebugOverlay.swift in Sources */,
+				8A8F9E6A2ED9B5520049AED5 /* ARArrowEntity.swift in Sources */,
+				8A8F9E6B2ED9B5520049AED5 /* ARAlignment.swift in Sources */,
+				8A8F9E6C2ED9B5520049AED5 /* MiniMapView.swift in Sources */,
+				8A8F9E792ED9D4C30049AED5 /* GeoUtils.swift in Sources */,
+				8A8F9E892EDB27870049AED5 /* Route+MapKit.swift in Sources */,
+				8A8F9E6D2ED9B5520049AED5 /* VisionUploader.swift in Sources */,
+				8A8F9E6E2ED9B5520049AED5 /* TurnHUDManager.swift in Sources */,
+				8A59AF3E2EDE8BE700C73794 /* DebugSettings.swift in Sources */,
+				8A59AF3C2EDE87F900C73794 /* YOLODetection.swift in Sources */,
+				8A8C561F2EDC15EF00B1C31B /* StepCountManager.swift in Sources */,
+				8A8F9E6F2ED9B5520049AED5 /* TurnPanel.swift in Sources */,
+				8A8F9E702ED9B5520049AED5 /* ARViewContainer.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		8A8F9E0D2ED9B2960049AED5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = ARH522YDKX;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.1;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		8A8F9E0E2ED9B2960049AED5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = ARH522YDKX;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.1;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		8A8F9E102ED9B2960049AED5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = walkwithme.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = ARH522YDKX;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
+				INFOPLIST_KEY_NSCameraUsageDescription = "This app uses the camera for AR navigation";
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "Walk With Me reads your step count to show daily and session steps.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "This app uses your location to provide navigation and show your position";
+				INFOPLIST_KEY_NSMotionUsageDescription = "We use motion data to count steps during navigation";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.saisrijith.walkwithme;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		8A8F9E112ED9B2960049AED5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = walkwithme.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = ARH522YDKX;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
+				INFOPLIST_KEY_NSCameraUsageDescription = "This app uses the camera for AR navigation";
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "Walk With Me reads your step count to show daily and session steps.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "This app uses your location to provide navigation and show your position";
+				INFOPLIST_KEY_NSMotionUsageDescription = "We use motion data to count steps during navigation";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.saisrijith.walkwithme;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		8A8F9DFF2ED9B2950049AED5 /* Build configuration list for PBXProject "walkwithme" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8A8F9E0D2ED9B2960049AED5 /* Debug */,
+				8A8F9E0E2ED9B2960049AED5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		8A8F9E0F2ED9B2960049AED5 /* Build configuration list for PBXNativeTarget "walkwithme" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8A8F9E102ED9B2960049AED5 /* Debug */,
+				8A8F9E112ED9B2960049AED5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 8A8F9DFC2ED9B2950049AED5 /* Project object */;
+}
