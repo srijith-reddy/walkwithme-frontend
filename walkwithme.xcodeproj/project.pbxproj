@@ -48,6 +48,7 @@
 		8A8F9E872EDB27760049AED5 /* SimpleNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A8F9E862EDB27760049AED5 /* SimpleNavigationView.swift */; };
 		8A8F9E892EDB27870049AED5 /* Route+MapKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A8F9E882EDB27870049AED5 /* Route+MapKit.swift */; };
 		8ABDA1432EE16FCE00B9E6E8 /* ARRouteChevronEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ABDA1422EE16FCE00B9E6E8 /* ARRouteChevronEntity.swift */; };
+		8ABDA1452EF7B32000B9E6E8 /* SimpleNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ABDA1442EF7B32000B9E6E8 /* SimpleNavigator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -94,6 +95,7 @@
 		8A8F9E862EDB27760049AED5 /* SimpleNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleNavigationView.swift; sourceTree = "<group>"; };
 		8A8F9E882EDB27870049AED5 /* Route+MapKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Route+MapKit.swift"; sourceTree = "<group>"; };
 		8ABDA1422EE16FCE00B9E6E8 /* ARRouteChevronEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARRouteChevronEntity.swift; sourceTree = "<group>"; };
+		8ABDA1442EF7B32000B9E6E8 /* SimpleNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleNavigator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -200,6 +202,7 @@
 				8A8F9E522ED9B5520049AED5 /* RouteView.swift */,
 				8A8F9E862EDB27760049AED5 /* SimpleNavigationView.swift */,
 				8A8F9E882EDB27870049AED5 /* Route+MapKit.swift */,
+				8ABDA1442EF7B32000B9E6E8 /* SimpleNavigator.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -306,6 +309,7 @@
 				8A8C561A2EDB38A400B1C31B /* YOLODebugOverlay.swift in Sources */,
 				8A8F9E6A2ED9B5520049AED5 /* ARArrowEntity.swift in Sources */,
 				8A8F9E6B2ED9B5520049AED5 /* ARAlignment.swift in Sources */,
+				8ABDA1452EF7B32000B9E6E8 /* SimpleNavigator.swift in Sources */,
 				8A8F9E6C2ED9B5520049AED5 /* MiniMapView.swift in Sources */,
 				8A8F9E792ED9D4C30049AED5 /* GeoUtils.swift in Sources */,
 				8A8F9E892EDB27870049AED5 /* Route+MapKit.swift in Sources */,
