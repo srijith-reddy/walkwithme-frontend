@@ -258,10 +258,3 @@ These are used for navigation, AR guidance, hazard awareness, and walking metric
 ## Current State
 
 The app already supports route planning, AR guidance, map fallback navigation, hazard awareness, GPX workflows, step tracking, route exploration features, walk analysis, and the Loop Assistant with favorites.
-
-Areas that would still benefit from cleanup in future iterations include:
-
-- centralizing backend configuration
-- adding screenshots or demo media to the repository
-- documenting backend response contracts in more detail
-- reviewing project settings and deployment targets
