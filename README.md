@@ -1,458 +1,267 @@
-# WalkWithMe iOS Frontend — AR Pedestrian Navigation, Hazard Awareness, and Backend-Driven City Walking
+# WalkWithMe iOS Frontend
 
-This repository contains the iOS frontend for WalkWithMe, a pedestrian-first navigation and city exploration app designed to support route discovery, AR walking guidance, live hazard awareness, map-based fallback navigation, GPX import, and step-aware walking experiences.
+WalkWithMe is a pedestrian-first navigation app built for city walking. It helps users discover routes, preview them on a map, launch turn-by-turn guidance, and navigate with an AR experience designed for real-world walking instead of car travel.
 
-The app is built with SwiftUI, ARKit, RealityKit, MapKit, CoreLocation, HealthKit, Core Motion, Vision, and a bundled YOLO Core ML model. It is designed to pair with the WalkWithMe backend for routing, place search, reverse geocoding, GPX parsing, and lightweight hazard interpretation, while keeping real-time camera perception and AR rendering on device.
+This repository contains the native iOS frontend. The app is built with SwiftUI and pairs with a backend that provides routing, search, place discovery, GPX support, themed walk suggestions, and walk-history analysis.
 
-The system is designed for walking-first experiences rather than car navigation, and it prioritizes mobile-native interaction, graceful degradation, and real-time responsiveness on a physical iPhone.
+## Overview
 
----
+The frontend is responsible for the user-facing experience of the product:
 
-System Responsibilities
+- route search and route preview
+- AR walking guidance
+- map-based fallback navigation
+- hazard awareness using on-device detection
+- nearby place discovery and route detours
+- GPX import and export
+- step tracking and walk-history analysis
 
-The frontend is responsible for:
+The app is designed for iPhone and aims to balance a polished interface with real-time responsiveness on a physical device.
 
-- Presenting route search and route mode selection
-- Rendering backend-provided walking geometry on a live map
-- Launching AR navigation from computed routes
-- Displaying turn-by-turn instructions and distance cues
-- Running on-device hazard detection from the camera feed
-- Estimating hazard distance using LiDAR, monocular depth, or visual fallback heuristics
-- Fusing backend hazard hints with on-device detections for AR presentation
-- Rendering AR route anchors, chevrons, markers, and hazard overlays
-- Providing a live AR HUD with compass, minimap, and turn banners
-- Supporting map-based fallback navigation with Apple Maps directions
-- Importing GPX files and visualizing imported paths
-- Tracking today and session step counts during walking sessions
-- Handling location, heading, camera, motion, and health permissions
-- Providing a mobile-first UI for route preview, walking stats, and navigation launch
+## Key Features
 
----
+### Route Planning
 
-High-Level Architecture
+- Search using your current location, typed places, coordinates, or dropped pins
+- Generate routes for different walking goals including `loop`, `scenic`, `explore`, `best`, `safe`, `shortest`, and `elevation`
+- Review route distance, duration, turns, and supporting route details before starting
+- Preview step-by-step directions directly from the planning screen
 
-The frontend is structured as a layered native iOS application:
+### Navigation
 
-App Layer
-- `WalkWithMeApp.swift` initializes the app and starts step-count services
-- `Views/ContentView.swift` boots directly into the route experience
-- `Views/RouteView.swift` is the primary search, route preview, and launch surface
+- Launch a full-screen AR navigation experience for walking guidance
+- Use a map-based navigator when AR is not needed or not available
+- Show turn instructions, distance remaining, and navigation context while walking
 
-Networking Layer
-- `Utils/API.swift` handles backend requests for route generation, autocomplete, POI search, reverse geocoding, and GPX import
-- `BackendConfig.swift` stores the backend base URL used by the vision uploader
-- Async/await networking with typed decoding and bounded timeouts
+### Loop Assistant
 
-Routing and Navigation Layer
-- `Utils/RouteViewModel.swift` owns route fetch state for the main route screen
-- `Utils/NavigationManager.swift` manages backend route state for map navigation flows
-- `Views/SimpleNavigator.swift` provides Apple Maps first, backend fallback, turn-aware map navigation
+- Open a conversational sheet to describe any kind of walk in plain text (e.g. "food walk in East Village" or "quick 20 min loop")
+- Pick from mood chips — Food, Scenic, Landmark, Quick, Chill, Surprise — to instantly trigger a curated search
+- Receive up to three ranked loop suggestions, each with a title, theme badge, duration, distance, highlights, and suggested stops
+- Bookmark any loop for later and re-launch saved loops directly from the Saved section without re-querying
+- Loading skeleton cards keep the UI responsive while results are fetched
 
-AR and Perception Layer
-- `AR/ARSessionManager.swift` coordinates AR world setup, route anchoring, HUD updates, and hazard upload
-- `AR/YOLODetector.swift` runs the bundled Core ML object detector on-device
-- `AR/DepthEstimator.swift` estimates distance to hazards using scene depth, Vision depth, or size heuristics
-- `AR/HazardFiltering.swift` suppresses noise and ranks only the highest-value hazards
-- `AR/HazardFusion.swift` merges backend hazard hints with on-device detections
+### Smart Exploration
 
-HUD and Presentation Layer
-- `HUD/ARHUDManager.swift` manages the AR compass and live minimap
-- `HUD/TurnHUDManager.swift` manages turn instruction overlays in AR
-- `HUD/YOLODebugOverlay.swift` and `HUD/FusionDebugOverlay.swift` support debugging and tuning
+- Load themed walking suggestions from the backend
+- Show nearby places relevant to the current area
+- Suggest route detours when they add useful or interesting stops
+- Surface persona-style route suggestions for different walking moods or preferences
 
-System Services
-- `Utils/LocationManager.swift` handles user location, heading, and speed
-- `StepCountManager.swift` integrates HealthKit and Core Motion for day/session steps
+### Safety and Awareness
 
-Bundled Assets and Models
-- `yolo11n.mlpackage/` contains the on-device Core ML detection model
-- `Assets.xcassets/` contains app icons and UI assets
+- Run on-device object detection during AR navigation
+- Estimate how far detected hazards are from the user
+- Highlight the most relevant hazards in the AR scene
+- Blend backend hints with on-device results where applicable
 
----
+### GPX and Walk History
 
-Application Flow
+- Import GPX files and turn them into route previews
+- Export active routes as GPX files
+- Track walking sessions and step counts
+- Analyze saved walks to show local coverage and unexplored areas
 
-Typical runtime flow:
+## Tech Stack
 
-1. The user enters a start and destination or uses current location
-2. The route screen calls the backend for route generation
-3. The returned route geometry, steps, and scores are rendered in the route preview UI
-4. The user launches either AR navigation or map navigation
-5. AR mode anchors route geometry into the world and starts the HUD update loop
-6. Camera frames are analyzed on device by YOLO
-7. Hazard detections are distance-estimated, filtered, optionally enriched with backend hints, and rendered into AR
-8. Turn instructions, minimap, compass, and walking stats update continuously while the user walks
+- SwiftUI
+- ARKit
+- RealityKit
+- MapKit
+- CoreLocation
+- HealthKit
+- Core Motion
+- Vision
+- Core ML
 
----
+## Architecture
 
-Core User Experiences
+The codebase is organized into focused layers so product flows remain easier to reason about and extend.
 
-Route Search and Preview
-- Search by typed address, POI query, or raw coordinates
-- Supports walking modes: `loop`, `scenic`, `explore`, `best`, `safe`, `shortest`, `elevation`
-- Displays route distance, duration, steps estimate, elevation gain, and backend scores when available
-- Supports step preview sheets for turn-by-turn browsing
+### App Entry
 
-AR Navigation
-- Full-screen AR session with RealityKit route markers and chevrons
-- Route anchored relative to the user’s current position
-- Live distance remaining pill
-- AR-specific turn HUD and compass/minimap overlay
-- Designed to function without blocking on perfect GPS lock before UI appears
+- `WalkWithMeApp.swift` starts the app and initializes step tracking
+- `Views/ContentView.swift` serves as the top-level view
 
-Map Navigation Fallback
-- Standard map navigation view using `MKMapView`
-- Prefers Apple walking directions when available
-- Falls back to backend-provided route geometry and steps when Apple routing fails
-- Displays instructions, distance to next turn, and ETA
+### Core Screens
 
-Hazard Awareness
-- On-device object detection for people, vehicles, bikes, dogs, and select traffic objects
-- Distance estimation from LiDAR when available
-- Monocular Vision depth fallback on supported devices
-- Bounding-box-based heuristic fallback when depth is unavailable
-- Conservative filtering to reduce alarm fatigue
-- Top hazard selection with severity scoring and AR placement
+- `Views/RouteView.swift` is the main planning and route-preview experience
+- `Views/ARScreen.swift` presents the AR navigation flow
+- `Views/SimpleNavigationView.swift` handles map-based navigation
 
-GPX Import
-- Uploads a GPX file to the backend
-- Decodes returned coordinates and elevation analysis
-- Converts imported data into the app’s route model for preview and navigation
+### Networking and State
 
-Walking Metrics
-- Day-total steps via HealthKit
-- Session steps via Core Motion pedometer
-- Step tracking starts automatically at app launch and resets per navigation session
+- `Utils/API.swift` contains the backend client
+- `Utils/RouteViewModel.swift` manages route-loading state for the main screen
+- `Utils/NavigationManager.swift` supports navigation-related route state
+- `Utils/WalkHistoryStore.swift` stores completed walk data for later analysis
 
----
+### AR and Hazard Awareness
 
-High-Level UI Architecture
+- `AR/ARSessionManager.swift` coordinates the AR experience
+- `AR/YOLODetector.swift` runs the bundled object-detection model
+- `AR/DepthEstimator.swift` estimates distance to detected objects
+- `AR/HazardFiltering.swift` reduces noise and prioritizes relevant hazards
+- `AR/HazardFusion.swift` combines backend and on-device hazard context
+- `AR/HazardOverlayManager.swift` manages hazard indicators in the AR experience
 
-Primary views:
+### Loop Assistant
 
-- `Views/RouteView.swift`
-  The main search, route mode, preview, and launch interface.
+- `Views/LoopAssistantSheet.swift` is the bottom-sheet UI: search bar, mood chips, results, saved loops, and loading skeletons
+- `Models/LoopAssistant.swift` defines `LoopOption`, `LoopOrigin`, and `LoopAssistantResponse` decoded from `/loop_assistant`
+- `Utils/LoopFavoritesStore.swift` persists bookmarked loops to UserDefaults via a shared `@MainActor` store
 
-- `Views/ARScreen.swift`
-  Full-screen AR navigation with route overlays and hazard rendering.
+### UI Support
 
-- `Views/SimpleNavigationView.swift`
-  Map-based turn display backed by Apple Maps or backend routing fallback.
+- `HUD/` contains turn banners, minimap UI, debug overlays, and AR heads-up-display components
+- `Models/` contains route, step, and related response models
+- `Assets.xcassets/` contains app icons and bundled visual assets
 
-Supporting presentation components:
+## Repository Structure
 
-- `HUD/TurnPanel.swift`
-- `HUD/TurnBannerView.swift`
-- `HUD/MiniMapView.swift`
-- `Views/Route+MapKit.swift`
-- `AR/MapKit.swift`
+```text
+.
+├── AR/
+├── HUD/
+├── Models/
+│   └── LoopAssistant.swift
+├── Utils/
+│   └── LoopFavoritesStore.swift
+├── Views/
+│   └── LoopAssistantSheet.swift
+├── Assets.xcassets/
+├── walkwithme.xcodeproj/
+├── WalkWithMeApp.swift
+├── BackendConfig.swift
+├── StepCountManager.swift
+├── yolo11n.mlpackage/
+└── README.md
+```
 
-SwiftUI remains intentionally thin. Most stateful navigation, AR, detection, and integration logic lives in dedicated manager objects rather than the view layer.
+## Application Flow
 
----
+At a high level, the user journey looks like this:
 
-Perception and Hazard Pipeline
+1. The user selects a start point and destination, or requests a loop route.
+2. The app requests route data from the backend.
+3. The route is shown in the planning interface with summary details and turn steps.
+4. The user launches either AR navigation or map navigation.
+5. During AR navigation, the app renders route guidance and performs hazard detection on device.
+6. Completed walks can be stored for later review and analysis.
 
-Hazard detection is primarily an on-device pipeline with optional backend reinforcement.
+## Backend Integration
 
-Pipeline flow:
+The frontend depends on a backend deployment for routing and several discovery features.
 
-1. ARKit provides camera frames and scene depth where supported
-2. `YOLODetector` runs the bundled `yolo11n` Core ML model
-3. Only hazard-relevant classes are retained
-4. Non-max suppression and per-class confidence thresholds reduce noise
-5. `DepthEstimator` computes distance using:
-   - AR scene depth
-   - Vision monocular depth
-   - bounding-box heuristic fallback
-6. `HazardFiltering` applies:
-   - minimum box size filtering
-   - near-person suppression when stationary
-   - crowd clustering
-   - forward-cone filtering
-   - severity ranking
-7. `VisionUploader` optionally sends detection metadata to the backend `/vision` endpoint
-8. `HazardFusion` boosts or confirms selected hazards using backend labels when present
-9. `HazardOverlayManager` renders the final top hazards in AR
+The current backend base URL is:
 
-Hazard classes currently emphasized:
-- `person`
-- `car`, `truck`, `bus`
-- `bike`, `bicycle`, `motorcycle`
-- `dog`
-- `stop_sign`, `traffic_light`
+`https://walkwithme-app-mw2xs.ondigitalocean.app`
 
----
+It is currently defined in:
 
-AR Navigation Architecture
+- `Utils/API.swift`
+- `BackendConfig.swift`
 
-`ARSessionManager` is the core runtime coordinator for AR mode.
+If the backend environment changes, both locations should be updated unless configuration is centralized later.
 
-Responsibilities:
-
-- Configuring the AR session
-- Managing world anchors
-- Placing start and end markers
-- Sampling route geometry into world-space chevrons
-- Updating compass, minimap, and turn HUD on a timer
-- Tracking distance remaining
-- Running the camera perception loop
-- Uploading hazard metadata to the backend
-- Cleaning up AR resources on dismiss
-
-AR route rendering includes:
-- Start marker
-- End marker
-- Repeated route chevrons sampled approximately every 20 meters
-- Hazard entities placed relative to camera and path context
-
-HUD components in AR:
-- Compass
-- Live rotating minimap
-- Turn panel
-- Optional YOLO and fusion debug overlays
-
----
-
-Backend Integration
-
-The frontend is backend-driven, but it does not currently use every backend endpoint described in the backend system design.
-
-Endpoints currently integrated in this repo:
+### Endpoints Used by the App
 
 - `GET /route`
 - `GET /autocomplete`
 - `GET /places_search`
 - `GET /reverse_geocode`
+- `GET /persona`
+- `GET /themes`
+- `GET /themes/:id`
+- `GET /nearby`
+- `GET /detours`
+- `GET /export_gpx`
 - `POST /import_gpx`
 - `POST /vision`
+- `POST /walks/analyze`
+- `POST /loop_assistant`
 
-Frontend expectations for route responses:
-- route `mode`
-- decoded `coordinates`
-- optional `waypoints`
-- optional `distance_m` and `duration_s`
-- optional `summary`
-- optional `steps`
-- optional `elevation`
-- optional `safety_score`, `scenic_score`, `ai_best_score`
-- optional `next_turn`
-- optional `places`
+## On-Device Detection
 
-Important integration note:
+The AR experience includes a local detection pipeline powered by the bundled Core ML model in `yolo11n.mlpackage`.
 
-The app currently hardcodes the backend URL in two places:
-- `Utils/API.swift`
-- `BackendConfig.swift`
+In practical terms, the app:
 
-If you change environments, update both unless you centralize the configuration first.
+- reads live camera frames during AR navigation
+- runs object detection on device
+- estimates distance using available depth information or fallback logic
+- filters noisy detections
+- renders only the most relevant hazards for the user
 
----
+This keeps the experience responsive and reduces dependence on round trips to the backend during navigation.
 
-Route and Search Integration
+## Running the App
 
-The frontend supports:
+### Requirements
 
-- Route fetches by coordinate pair
-- Loop mode requests without an end coordinate
-- Address-style autocomplete
-- POI-style free-text search
-- Reverse geocoding for dropped pins
-- GPX import via multipart upload
+- Xcode
+- an iPhone for the full AR experience
+- camera, location, and motion permissions
+- Health permissions if step tracking is needed
+- access to the configured backend
 
-Current route mode surface in the UI:
-- Loop
-- Scenic
-- Explore
-- AI Best
-- Safe
-- Fastest
-- Hilly
+### Setup
 
-Current client limitations relative to the backend:
-- The frontend does not yet request `enrich=true`
-- The frontend does not yet request `elevation=true` on normal route fetches
-- The frontend does not yet send `loop_theme`
-- The frontend does not yet consume the richer backend enrichment block described for landmarks, food, parks, highlights, and neighborhood flavor
-- The frontend does not currently expose endpoints like `/detours`, `/persona`, `/themes`, `/nearby`, `/export_gpx`, or `/walks/analyze`
+1. Open `walkwithme.xcodeproj` in Xcode.
+2. Select the `walkwithme` scheme.
+3. Choose a physical iPhone for AR testing.
+4. Build and run the app.
 
----
+The app launches into the main route-planning experience.
 
-Location, Heading, and Motion
+### Recommended Smoke Test
 
-The app uses:
+1. Search for a route from the main screen.
+2. Confirm the route preview loads with summary information.
+3. Open the turn list.
+4. Launch map navigation.
+5. Launch AR navigation on device.
+6. Verify that route guidance, minimap UI, and navigation overlays appear.
 
-- `CoreLocation` for user position and heading
-- `MapKit` for map rendering and Apple route fallback
-- `HealthKit` for daily step counts
-- `Core Motion` pedometer updates for active walking sessions
+## Permissions
 
-Location behavior:
-- High-accuracy GPS
-- Heading updates enabled
-- Speed estimation from `CLLocation`
-- Short distance and heading filters tuned for walking
-
-Step behavior:
-- App launch initializes step services
-- Session step count begins when navigation starts
-- Session count ends when navigation ends
-
----
-
-Repository Structure
-
-Top-level layout:
-
-```text
-.
-├── AR/
-│   ├── AR session, routing anchors, hazard rendering, depth, YOLO, fusion
-├── HUD/
-│   ├── AR HUD, turn panels, debug overlays, minimap
-├── Models/
-│   ├── Route, step, and place response models
-├── Utils/
-│   ├── API client, view models, navigation manager, location utilities
-├── Views/
-│   ├── Route UI, AR screen, map navigation, SwiftUI presentation
-├── Assets.xcassets/
-│   ├── App icons and asset catalog
-├── yolo11n.mlpackage/
-│   ├── Bundled Core ML detection model
-├── WalkWithMeApp.swift
-├── BackendConfig.swift
-└── StepCountManager.swift
-```
-
-Notable files:
-
-- `Views/RouteView.swift`
-  Main entry screen and user-facing route workflow.
-
-- `Utils/API.swift`
-  Typed backend client for core app networking.
-
-- `AR/ARSessionManager.swift`
-  Central AR runtime coordinator.
-
-- `AR/YOLODetector.swift`
-  On-device object detection pipeline.
-
-- `AR/DepthEstimator.swift`
-  Hazard distance estimation pipeline.
-
-- `AR/HazardFiltering.swift`
-  Noise reduction and ranking logic for hazards.
-
-- `Views/SimpleNavigator.swift`
-  Apple Maps first, backend fallback map navigation.
-
-- `StepCountManager.swift`
-  HealthKit and pedometer integration.
-
----
-
-Build Requirements
-
-Requirements:
-
-- Xcode with iOS SDK support for ARKit, RealityKit, Vision, and Core ML
-- A physical iPhone for AR functionality
-- Camera, location, motion, and Health permissions
-- A reachable WalkWithMe backend deployment
-
-Simulator support:
-- Route UI and some map flows can be exercised in Simulator
-- AR navigation, real camera perception, and depth-dependent features require a real device
-
-Bundled model requirement:
-- `yolo11n.mlpackage` must remain included in the target for on-device hazard detection to work
-
----
-
-Configuration
-
-This frontend does not currently use a `.env`-style configuration system. Backend configuration is compiled into source.
-
-Current backend configuration locations:
-
-- `Utils/API.swift`
-  Base URL used for route, search, reverse geocode, and GPX import
-
-- `BackendConfig.swift`
-  Base URL used for `/vision`
-
-Before running against a different backend environment, update both values.
-
-Additional operational requirements:
-
-- The backend must expose the expected WalkWithMe API contract
-- The `/vision` endpoint should be available if backend hazard confirmation is desired
-- Google Places-backed POI search depends on backend support, not frontend configuration
-
----
-
-Permissions
-
-The app currently declares usage for:
+The app relies on the following permissions:
 
 - Camera
-- Location when in use
+- Location
 - Motion
-- Health data read access for step count
+- Health data access for step tracking
 
-These permissions support:
+These are used for navigation, AR guidance, hazard awareness, and walking metrics.
 
-- AR navigation and hazard detection
-- Live user location and heading
-- Step counting during walking sessions
+## Development Notes
 
----
+- This repository is the iOS app even though the repo name includes `frontend`.
+- The project includes bundled model assets, so repository size and push times may be larger than a typical SwiftUI app.
+- Some features depend directly on backend response structure and availability.
+- The current project stores backend configuration in source rather than through environment-based config.
 
-Local Development
+## Main Files to Know
 
-Open and run:
+- `WalkWithMeApp.swift`
+- `Views/RouteView.swift`
+- `Views/ARScreen.swift`
+- `Views/SimpleNavigationView.swift`
+- `Views/LoopAssistantSheet.swift`
+- `Utils/API.swift`
+- `Utils/RouteViewModel.swift`
+- `Utils/LoopFavoritesStore.swift`
+- `Models/LoopAssistant.swift`
+- `AR/ARSessionManager.swift`
+- `Utils/WalkHistoryStore.swift`
 
-```bash
-open walkwithme.xcodeproj
-```
+## Current State
 
-Suggested local workflow:
+The app already supports route planning, AR guidance, map fallback navigation, hazard awareness, GPX workflows, step tracking, route exploration features, walk analysis, and the Loop Assistant with favorites.
 
-1. Open the project in Xcode
-2. Select a physical iPhone for AR testing
-3. Confirm the backend base URL in `Utils/API.swift`
-4. Confirm the backend base URL in `BackendConfig.swift`
-5. Build and run
-6. Grant camera, location, motion, and Health permissions when prompted
+Areas that would still benefit from cleanup in future iterations include:
 
-Recommended smoke test:
-
-1. Search for a route in `RouteView`
-2. Preview the route card and turn list
-3. Launch AR navigation
-4. Confirm compass, minimap, and route chevrons appear
-5. Confirm hazard overlays appear when relevant detections are in frame
-6. Confirm map fallback navigation opens for non-loop routes
-
----
-
-Design Principles
-
-- Pedestrian-first, not car-centric
-- AR as an enhancement, not a gimmick
-- Real-time perception should stay on device when possible
-- Backend integration should remain thin and typed
-- SwiftUI for presentation, managers for stateful runtime systems
-- Graceful fallback when a subsystem is unavailable
-- Debuggable perception and navigation tooling for iteration
-- Walking UX should stay lightweight, glanceable, and non-intrusive
-
----
-
-Current Status
-
-Active development
-
-This repository contains the iOS frontend only. It is intended to pair with the WalkWithMe backend and currently provides route preview, AR navigation, hazard awareness, GPX import, Apple Maps fallback navigation, and walking metrics on iPhone.
+- centralizing backend configuration
+- adding screenshots or demo media to the repository
+- documenting backend response contracts in more detail
+- reviewing project settings and deployment targets
