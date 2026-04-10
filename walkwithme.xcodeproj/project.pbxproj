@@ -32,6 +32,9 @@
 		AA000001000000000000AAB1 /* RoutePlace.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000001000000000000AAA1 /* RoutePlace.swift */; };
 		AA000001000000000000AAB2 /* RouteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000001000000000000AAA2 /* RouteViewModel.swift */; };
 		AA000001000000000000AAB3 /* WalkHistoryStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000001000000000000AAA3 /* WalkHistoryStore.swift */; };
+		AA000002000000000000AAB1 /* LoopAssistant.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000002000000000000AAA1 /* LoopAssistant.swift */; };
+		AA000002000000000000AAB2 /* LoopAssistantSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000002000000000000AAA2 /* LoopAssistantSheet.swift */; };
+		AA000002000000000000AAB3 /* LoopFavoritesStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000002000000000000AAA3 /* LoopFavoritesStore.swift */; };
 		8A8F9E662ED9B5520049AED5 /* YOLODetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A8F9E402ED9B5520049AED5 /* YOLODetector.swift */; };
 		8A8F9E672ED9B5520049AED5 /* ARHazardEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A8F9E372ED9B5520049AED5 /* ARHazardEntity.swift */; };
 		8A8F9E682ED9B5520049AED5 /* RouteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A8F9E522ED9B5520049AED5 /* RouteView.swift */; };
@@ -84,6 +87,9 @@
 		AA000001000000000000AAA1 /* RoutePlace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutePlace.swift; sourceTree = "<group>"; };
 		AA000001000000000000AAA2 /* RouteViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteViewModel.swift; sourceTree = "<group>"; };
 		AA000001000000000000AAA3 /* WalkHistoryStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalkHistoryStore.swift; sourceTree = "<group>"; };
+		AA000002000000000000AAA1 /* LoopAssistant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoopAssistant.swift; sourceTree = "<group>"; };
+		AA000002000000000000AAA2 /* LoopAssistantSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoopAssistantSheet.swift; sourceTree = "<group>"; };
+		AA000002000000000000AAA3 /* LoopFavoritesStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoopFavoritesStore.swift; sourceTree = "<group>"; };
 		8A8F9E4A2ED9B5520049AED5 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		8A8F9E4B2ED9B5520049AED5 /* Bearing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bearing.swift; sourceTree = "<group>"; };
 		8A8F9E4C2ED9B5520049AED5 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
@@ -184,6 +190,7 @@
 				8A8F9E472ED9B5520049AED5 /* RouteResponse.swift */,
 				8A8F9E482ED9B5520049AED5 /* Step.swift */,
 				AA000001000000000000AAA1 /* RoutePlace.swift */,
+				AA000002000000000000AAA1 /* LoopAssistant.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -198,6 +205,7 @@
 				8A8F9E782ED9D4C30049AED5 /* GeoUtils.swift */,
 				AA000001000000000000AAA2 /* RouteViewModel.swift */,
 				AA000001000000000000AAA3 /* WalkHistoryStore.swift */,
+				AA000002000000000000AAA3 /* LoopFavoritesStore.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -208,6 +216,7 @@
 				8A8F9E4F2ED9B5520049AED5 /* ARScreen.swift */,
 				8A8F9E502ED9B5520049AED5 /* ARViewContainer.swift */,
 				8A8F9E512ED9B5520049AED5 /* ContentView.swift */,
+				AA000002000000000000AAA2 /* LoopAssistantSheet.swift */,
 				8A8F9E522ED9B5520049AED5 /* RouteView.swift */,
 				8A8F9E862EDB27760049AED5 /* SimpleNavigationView.swift */,
 				8A8F9E882EDB27870049AED5 /* Route+MapKit.swift */,
@@ -310,6 +319,9 @@
 				AA000001000000000000AAB1 /* RoutePlace.swift in Sources */,
 				AA000001000000000000AAB2 /* RouteViewModel.swift in Sources */,
 				AA000001000000000000AAB3 /* WalkHistoryStore.swift in Sources */,
+				AA000002000000000000AAB1 /* LoopAssistant.swift in Sources */,
+				AA000002000000000000AAB2 /* LoopAssistantSheet.swift in Sources */,
+				AA000002000000000000AAB3 /* LoopFavoritesStore.swift in Sources */,
 				8A8F9E662ED9B5520049AED5 /* YOLODetector.swift in Sources */,
 				8A8F9E672ED9B5520049AED5 /* ARHazardEntity.swift in Sources */,
 				8A8F9E682ED9B5520049AED5 /* RouteView.swift in Sources */,

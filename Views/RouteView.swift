@@ -95,6 +95,10 @@ struct RouteView: View {
 
     // Route card dismiss gesture
     @State private var cardDragOffset: CGFloat = 0
+    @State private var isRouteCardCollapsed = false
+
+    // Loop Assistant
+    @State private var showLoopAssistant = false
 
     // Autocomplete
     private enum ActiveField: Equatable { case none, start, stop(UUID), end }
@@ -240,6 +244,15 @@ struct RouteView: View {
                 routeCount: walkHistory.routes.count,
                 isLoading: isAnalyzingWalks
             )
+        }
+        .sheet(isPresented: $showLoopAssistant) {
+            LoopAssistantSheet(
+                vm: vm,
+                userLocation: locationManager.userLocation
+            ) { option, origin in
+                showLoopAssistant = false
+                applyLoopSelection(option: option, origin: origin)
+            }
         }
         .sheet(isPresented: $showExportShareSheet, onDismiss: { exportedGPXURL = nil }) {
             if let url = exportedGPXURL {
@@ -408,6 +421,14 @@ struct RouteView: View {
     private var utilitiesMenu: some View {
         Menu {
             Button {
+                showLoopAssistant = true
+            } label: {
+                Label("Loop Assistant", systemImage: "wand.and.sparkles")
+            }
+
+            Divider()
+
+            Button {
                 Task { await presentPersonaSheet() }
             } label: {
                 Label("Walk Persona", systemImage: "sparkles")
@@ -526,35 +547,51 @@ struct RouteView: View {
         icon: String,
         iconColor: Color
     ) -> some View {
+        let showsCurrentLocationLabel =
+            field == .start &&
+            text.wrappedValue.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty &&
+            activeField != field &&
+            locationManager.userLocation != nil
+
         HStack(spacing: 10) {
             Image(systemName: icon)
                 .font(.system(size: 9, weight: .black))
                 .foregroundStyle(iconColor)
                 .frame(width: 20)
 
-            TextField(placeholder, text: text,
-                      onEditingChanged: { editing in
-                          withAnimation(.easeInOut(duration: 0.15)) {
-                              activeField = editing ? field : .none
-                          }
-                          if !editing { clearSuggestions() }
-                      })
-                .font(.system(size: 16))
-                .disableAutocorrection(true)
-                .textInputAutocapitalization(.never)
-                .onChange(of: text.wrappedValue) { _, v in
-                    if activeField == field {
-                        switch field {
-                        case .start:
-                            startCoordinate = nil
-                        case .end:
-                            endCoordinate = nil
-                        case .none, .stop:
-                            break
+            ZStack(alignment: .leading) {
+                TextField(placeholder, text: text,
+                          onEditingChanged: { editing in
+                              withAnimation(.easeInOut(duration: 0.15)) {
+                                  activeField = editing ? field : .none
+                              }
+                              if !editing { clearSuggestions() }
+                          })
+                    .font(.system(size: 16))
+                    .disableAutocorrection(true)
+                    .textInputAutocapitalization(.never)
+                    .opacity(showsCurrentLocationLabel ? 0.02 : 1)
+                    .onChange(of: text.wrappedValue) { _, v in
+                        if activeField == field {
+                            switch field {
+                            case .start:
+                                startCoordinate = nil
+                            case .end:
+                                endCoordinate = nil
+                            case .none, .stop:
+                                break
+                            }
+                            triggerAutocomplete(with: v)
                         }
-                        triggerAutocomplete(with: v)
                     }
+
+                if showsCurrentLocationLabel {
+                    Text("Current location")
+                        .font(.system(size: 16))
+                        .foregroundStyle(.primary)
+                        .allowsHitTesting(false)
                 }
+            }
 
             if !text.wrappedValue.isEmpty {
                 Button {
@@ -882,45 +919,89 @@ struct RouteView: View {
         if vm.isLoading {
             routeSkeletonCard
         } else if let route = vm.currentRoute {
-            routeCard(route)
-                .transition(.move(edge: .bottom).combined(with: .opacity))
-                .simultaneousGesture(
-                    DragGesture()
-                        .onChanged { v in
-                            if v.translation.height > 0 { cardDragOffset = v.translation.height }
-                        }
-                        .onEnded { v in
-                            if v.translation.height > 80 {
-                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                                withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
-                                    vm.clearRoute()
-                                    cardDragOffset = 0
-                                }
-                            } else {
-                                withAnimation(.spring(response: 0.25, dampingFraction: 0.9)) {
-                                    cardDragOffset = 0
-                                }
-                            }
-                        }
-                )
+            Group {
+                if isRouteCardCollapsed {
+                    collapsedRouteCard(route)
+                } else {
+                    expandedRouteCard(route)
+                }
+            }
+            .transition(.move(edge: .bottom).combined(with: .opacity))
         } else {
             idleButton.transition(.opacity)
         }
     }
 
     private var idleButton: some View {
-        Button {
-            Task { await requestRoute() }
-        } label: {
-            HStack(spacing: 10) {
-                Image(systemName: "figure.walk").font(.system(size: 16, weight: .semibold))
-                Text(idleButtonTitle).font(.system(size: 17, weight: .semibold))
+        VStack(spacing: 10) {
+            // Loop Assistant entry point
+            Button {
+                showLoopAssistant = true
+            } label: {
+                HStack(spacing: 8) {
+                    Image(systemName: "wand.and.sparkles")
+                        .font(.system(size: 13, weight: .semibold))
+                    Text("Find a loop with AI")
+                        .font(.system(size: 14, weight: .semibold))
+                    Spacer()
+                    Image(systemName: "chevron.right")
+                        .font(.system(size: 11, weight: .semibold))
+                        .foregroundStyle(.secondary)
+                }
+                .padding(.horizontal, 16)
+                .padding(.vertical, 13)
+                .background(
+                    LinearGradient(
+                        colors: [
+                            Color(red: 0.5, green: 0.25, blue: 1.0).opacity(0.1),
+                            Color(red: 0.2, green: 0.55, blue: 1.0).opacity(0.1),
+                        ],
+                        startPoint: .leading,
+                        endPoint: .trailing
+                    ),
+                    in: RoundedRectangle(cornerRadius: 14, style: .continuous)
+                )
+                .overlay(
+                    RoundedRectangle(cornerRadius: 14, style: .continuous)
+                        .stroke(
+                            LinearGradient(
+                                colors: [
+                                    Color(red: 0.5, green: 0.25, blue: 1.0).opacity(0.3),
+                                    Color(red: 0.2, green: 0.55, blue: 1.0).opacity(0.3),
+                                ],
+                                startPoint: .leading,
+                                endPoint: .trailing
+                            ),
+                            lineWidth: 1
+                        )
+                )
+                .foregroundStyle(
+                    LinearGradient(
+                        colors: [
+                            Color(red: 0.5, green: 0.25, blue: 1.0),
+                            Color(red: 0.2, green: 0.55, blue: 1.0),
+                        ],
+                        startPoint: .leading,
+                        endPoint: .trailing
+                    )
+                )
             }
-            .frame(maxWidth: .infinity).padding(.vertical, 16)
-            .background(Color.primary, in: RoundedRectangle(cornerRadius: 16, style: .continuous))
-            .foregroundStyle(Color(UIColor.systemBackground))
+            .shadow(color: Color(red: 0.35, green: 0.2, blue: 0.9).opacity(0.18), radius: 10, y: 3)
+
+            // Manual route build
+            Button {
+                Task { await requestRoute() }
+            } label: {
+                HStack(spacing: 10) {
+                    Image(systemName: "figure.walk").font(.system(size: 16, weight: .semibold))
+                    Text(idleButtonTitle).font(.system(size: 17, weight: .semibold))
+                }
+                .frame(maxWidth: .infinity).padding(.vertical, 16)
+                .background(Color.primary, in: RoundedRectangle(cornerRadius: 16, style: .continuous))
+                .foregroundStyle(Color(UIColor.systemBackground))
+            }
+            .shadow(color: .black.opacity(0.16), radius: 14, y: 4)
         }
-        .shadow(color: .black.opacity(0.16), radius: 14, y: 4)
     }
 
     private var idleButtonTitle: String {
@@ -933,9 +1014,120 @@ struct RouteView: View {
         return "Find a walk"
     }
 
-    private func routeCard(_ route: Route) -> some View {
+    private func expandedRouteCard(_ route: Route) -> some View {
+        ScrollView(.vertical, showsIndicators: false) {
+            routeCardContent(route)
+        }
+        .frame(maxHeight: 430)
+        .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 24, style: .continuous))
+        .shadow(color: .black.opacity(0.13), radius: 22, y: 6)
+    }
+
+    private func collapsedRouteCard(_ route: Route) -> some View {
+        Button {
+            withAnimation(.spring(response: 0.32, dampingFraction: 0.84)) {
+                isRouteCardCollapsed = false
+            }
+        } label: {
+            VStack(alignment: .leading, spacing: 12) {
+                HStack {
+                    Capsule()
+                        .fill(Color.secondary.opacity(0.35))
+                        .frame(width: 36, height: 5)
+                    Spacer()
+                    Image(systemName: "chevron.up")
+                        .font(.system(size: 13, weight: .semibold))
+                        .foregroundStyle(.secondary)
+                }
+
+                HStack(alignment: .center, spacing: 12) {
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text(routeTitle(for: route))
+                            .font(.system(size: 17, weight: .semibold))
+                            .foregroundStyle(.primary)
+                            .lineLimit(1)
+                        Text(compactRouteSummary(for: route))
+                            .font(.system(size: 13))
+                            .foregroundStyle(.secondary)
+                            .lineLimit(1)
+                    }
+
+                    Spacer()
+
+                    HStack(spacing: 6) {
+                        Image(systemName: "arrow.up.left.and.arrow.down.right")
+                            .font(.system(size: 12, weight: .semibold))
+                        Text("Expand")
+                            .font(.system(size: 13, weight: .semibold))
+                    }
+                    .foregroundStyle(.blue)
+                }
+            }
+            .padding(16)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 24, style: .continuous))
+            .shadow(color: .black.opacity(0.12), radius: 18, y: 5)
+        }
+        .buttonStyle(.plain)
+        .simultaneousGesture(
+            DragGesture()
+                .onChanged { v in
+                    if v.translation.height < 0 { cardDragOffset = v.translation.height }
+                }
+                .onEnded { v in
+                    withAnimation(.spring(response: 0.28, dampingFraction: 0.85)) {
+                        if v.translation.height < -35 {
+                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                            isRouteCardCollapsed = false
+                        }
+                        cardDragOffset = 0
+                    }
+                }
+        )
+    }
+
+    private func routeCardContent(_ route: Route) -> some View {
         let displayedPlaces = displayedComingUpPlaces(for: route)
         return VStack(alignment: .leading, spacing: 12) {
+
+            HStack {
+                Capsule()
+                    .fill(Color.secondary.opacity(0.35))
+                    .frame(width: 36, height: 5)
+                Spacer()
+                Button {
+                    withAnimation(.spring(response: 0.32, dampingFraction: 0.84)) {
+                        isRouteCardCollapsed = true
+                    }
+                } label: {
+                    Image(systemName: "chevron.down")
+                        .font(.system(size: 13, weight: .semibold))
+                        .foregroundStyle(.secondary)
+                        .frame(width: 30, height: 30)
+                        .background(Color.secondary.opacity(0.08), in: Circle())
+                }
+                .buttonStyle(.plain)
+            }
+            .contentShape(Rectangle())
+            .gesture(
+                DragGesture()
+                    .onChanged { v in
+                        if v.translation.height > 0 { cardDragOffset = v.translation.height }
+                    }
+                    .onEnded { v in
+                        withAnimation(.spring(response: 0.3, dampingFraction: 0.82)) {
+                            if v.translation.height > 170 {
+                                UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+                                vm.clearRoute()
+                                isRouteCardCollapsed = false
+                            } else if v.translation.height > 70 {
+                                UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                isRouteCardCollapsed = true
+                            }
+                            cardDragOffset = 0
+                        }
+                    }
+            )
 
             // ── Title ──────────────────────────────────────────────────────
             HStack(alignment: .top) {
@@ -997,8 +1189,11 @@ struct RouteView: View {
                     }
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 15)
-                    .background(Color.primary, in: RoundedRectangle(cornerRadius: 14, style: .continuous))
-                    .foregroundStyle(Color(UIColor.systemBackground))
+                    .background(
+                        Color(red: 0.17, green: 0.17, blue: 0.15),
+                        in: RoundedRectangle(cornerRadius: 14, style: .continuous)
+                    )
+                    .foregroundStyle(.white)
                 }
 
                 Button {
@@ -1112,8 +1307,6 @@ struct RouteView: View {
             }
         }
         .padding(20)
-        .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 24, style: .continuous))
-        .shadow(color: .black.opacity(0.13), radius: 22, y: 6)
     }
 
     // MARK: - Sub-components
@@ -1122,10 +1315,10 @@ struct RouteView: View {
     private func comingUpSection(_ places: [EnrichedPlace]) -> some View {
         VStack(alignment: .leading, spacing: 10) {
             Text("Coming up on your walk")
-                .font(.system(size: 12, weight: .semibold))
-                .foregroundStyle(.secondary)
+                .font(.system(size: 13, weight: .bold))
+                .foregroundStyle(Color.primary.opacity(0.72))
                 .textCase(.uppercase)
-                .tracking(0.4)
+                .tracking(0.7)
 
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 10) {
@@ -1359,6 +1552,8 @@ struct RouteView: View {
             polylineProgress = 0
             fallbackComingUpPlaces = []
             isLoadingComingUpPlaces = false
+            isRouteCardCollapsed = false
+            cardDragOffset = 0
             UINotificationFeedbackGenerator().notificationOccurred(.success)
             UIImpactFeedbackGenerator(style: .medium).impactOccurred()
             withAnimation(.easeOut(duration: 0.65)) { polylineProgress = 1.0 }
@@ -1371,6 +1566,8 @@ struct RouteView: View {
             lastRouteID = nil
             fallbackComingUpPlaces = []
             isLoadingComingUpPlaces = false
+            isRouteCardCollapsed = false
+            cardDragOffset = 0
         }
     }
 
@@ -1453,6 +1650,20 @@ struct RouteView: View {
         case "gpx":       return "GPX Route"
         default:          return "Your Route"
         }
+    }
+
+    private func compactRouteSummary(for route: Route) -> String {
+        var parts: [String] = []
+        if vm.distanceText != "—" {
+            parts.append(vm.distanceText)
+        }
+        if let duration = vm.durationText {
+            parts.append(duration)
+        }
+        if let steps = route.steps?.count, steps > 0 {
+            parts.append("\(steps) turns")
+        }
+        return parts.isEmpty ? modeLabel(for: route.mode) : parts.joined(separator: " • ")
     }
 
     private func routeSubtitle(for route: Route) -> String {
@@ -1561,6 +1772,37 @@ struct RouteView: View {
         clearSuggestions()
         UIImpactFeedbackGenerator(style: .medium).impactOccurred()
         Task { await vm.fetchRoute(for: p, start: start) }
+    }
+
+    // MARK: - Loop Assistant selection
+
+    /// Autofills the planner from a Loop Assistant selection and fetches the route.
+    /// Calls GET /route?mode=loop&duration=...&loop_theme=... via the existing fetchRoute path.
+    private func applyLoopSelection(option: LoopOption, origin: LoopOrigin) {
+        // Autofill planner state
+        startText       = origin.label
+        startCoordinate = origin.coordinate
+        stops           = []
+        endText         = ""
+        endCoordinate   = nil
+
+        // Ensure loop mode is active
+        withAnimation(.spring(response: 0.22, dampingFraction: 0.72)) {
+            vm.mode = "loop"
+        }
+
+        UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+        vm.showToast("Building your \(option.title)…", isError: false)
+
+        // Fetch the full route using the existing route API
+        Task {
+            await vm.fetchRoute(
+                start: origin.coordinate,
+                end: nil,
+                duration: option.durationMin,
+                loopTheme: option.theme
+            )
+        }
     }
 
     private func refreshPersonaIfNeeded(force: Bool) async {

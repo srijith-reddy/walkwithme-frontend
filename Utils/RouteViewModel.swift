@@ -36,6 +36,16 @@ final class RouteViewModel: ObservableObject {
     @Published var toastIsError = true
     private var toastTask: Task<Void, Never>?
 
+    // MARK: - Loop Assistant state
+
+    @Published var loopQuery        = ""
+    @Published var loopOptions:     [LoopOption] = []
+    @Published var isLoadingLoops   = false
+    @Published var selectedLoop:    LoopOption?
+    @Published var loopOrigin:      LoopOrigin?
+    @Published var loopSummary:     String?
+    @Published var loopError:       String?
+
     // MARK: - Derived text
 
     var distanceText: String {
@@ -157,6 +167,46 @@ final class RouteViewModel: ObservableObject {
 
     func clearRoute() {
         currentRoute = nil
+    }
+
+    // MARK: - Loop Assistant actions
+
+    /// Calls POST /loop_assistant and populates loopOptions.
+    func generateLoops(query: String, userLat: Double?, userLon: Double?) async {
+        guard !query.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else { return }
+
+        isLoadingLoops = true
+        loopError      = nil
+        loopOptions    = []
+        loopOrigin     = nil
+        loopSummary    = nil
+        loopQuery      = query
+
+        do {
+            let response = try await API.shared.fetchLoopOptions(
+                query: query,
+                userLat: userLat,
+                userLon: userLon
+            )
+            loopOptions = response.options
+            loopOrigin  = response.origin
+            loopSummary = response.assistantSummary
+        } catch {
+            loopError = error.localizedDescription
+        }
+
+        isLoadingLoops = false
+    }
+
+    /// Clears all loop assistant state (call when sheet is dismissed or a new query starts).
+    func clearLoopAssistant() {
+        loopQuery      = ""
+        loopOptions    = []
+        isLoadingLoops = false
+        selectedLoop   = nil
+        loopOrigin     = nil
+        loopSummary    = nil
+        loopError      = nil
     }
 
     func showToast(_ message: String, isError: Bool = true) {

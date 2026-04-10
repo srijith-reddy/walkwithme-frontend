@@ -618,6 +618,58 @@ final class API {
         return try await importGPX(data: data, filename: fileURL.lastPathComponent)
     }
 
+    // MARK: - Loop Assistant
+
+    /// POST /loop_assistant — returns ranked loop options for natural-language query.
+    /// Response is preview-only; navigation calls GET /route after selection.
+    func fetchLoopOptions(query: String,
+                          userLat: Double?,
+                          userLon: Double?,
+                          maxOptions: Int = 3) async throws -> LoopAssistantResponse {
+
+        let url = baseURL.appendingPathComponent("loop_assistant")
+
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+
+        struct Payload: Encodable {
+            let query: String
+            let userLat: Double?
+            let userLon: Double?
+            let maxOptions: Int
+
+            enum CodingKeys: String, CodingKey {
+                case query
+                case userLat    = "user_lat"
+                case userLon    = "user_lon"
+                case maxOptions = "max_options"
+            }
+        }
+
+        let payload = Payload(
+            query: query,
+            userLat: userLat,
+            userLon: userLon,
+            maxOptions: maxOptions
+        )
+        request.httpBody = try JSONEncoder().encode(payload)
+
+        let (data, response) = try await session.data(for: request)
+        try validate(response: response, data: data)
+
+        do {
+            let decoder = JSONDecoder()
+            return try decoder.decode(LoopAssistantResponse.self, from: data)
+        } catch {
+            // Log the raw payload so mismatches are easy to diagnose
+            let raw = String(data: data, encoding: .utf8) ?? "<binary>"
+            print("⚠️ LoopAssistant decoding error:", error)
+            print("⚠️ Raw response:", raw)
+            throw APIError.decodingFailed
+        }
+    }
+
     private func validate(response: URLResponse, data: Data) throws {
         guard let http = response as? HTTPURLResponse else {
             throw APIError.requestFailed
